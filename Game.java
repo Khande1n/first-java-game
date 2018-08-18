@@ -6,7 +6,7 @@ public class Game {
   private String misses;
   
   public Game (String answer){
-    this.answer = answer;
+    this.answer = answer.toLowerCase();
     hits = "";
     misses = "";
   }
@@ -15,10 +15,19 @@ public class Game {
     return MAX_MISSES - misses.length();
   }
   
-  public boolean applyGuess(char letter) {
-    if (hits.indexOf(letter) != -1 || misses.indexOf(letter) != -1){
+  private char normalizedGuess(char letter){
+    if (! Character.isLetter(letter)) {
+      throw new IllegalArgumentException("A letter is required");
+    }
+    letter = Character.toLowerCase(letter);
+     if (hits.indexOf(letter) != -1 || misses.indexOf(letter) != -1){
       throw new IllegalArgumentException(letter + " has already been guessed");
     }
+    return letter;
+  }
+
+  public boolean applyGuess(char letter) {
+    letter = normalizedGuess(letter);
     boolean isHit = answer.indexOf(letter) != -1;
     if(isHit){
       hits += letter;
