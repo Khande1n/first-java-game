@@ -10,6 +10,10 @@ public class Game {
     hits = "";
     misses = "";
   }
+
+  public String getAnswer() {
+    return answer;
+  }
   
   public int getMissCount(){
     return MAX_MISSES - misses.length();
@@ -47,6 +51,10 @@ public class Game {
       progress += display;
     }
         return progress;
+  }
+
+  public boolean isWon() {
+    return getCurrentProgress().indexOf('-') == -1;
   }
 
 }  
